@@ -8,10 +8,13 @@ pytest = "*"
 setuptools = "*"
 black = "==18.9b0"
 setuptools-scm = "*"
+boto3-type-annotations = "*"
+bump2version = "*"
 
 [packages]
 boto3 = "*"
 click = "*"
+assume-role = {editable = true,path = "."}
 
 [requires]
 python_version = "3.7"

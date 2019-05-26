@@ -1,5 +1,5 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read(fname):
@@ -8,5 +8,19 @@ def read(fname):
 
 setup(
     name="assume-role",
-    use_scm_version=True,
+    author="Gerry Put",
+    author_email="gerry@theblackcat.company",
+    description="A utility to assume aws roles",
+    version="0.1",
+    long_description=read('README.md'),
+    long_description_content_type="text/markdown",
+    url="https://github.com/becrsh/assume-role-cli",
+    install_requires=['boto3', 'Click'],
+    py_modules=['assume_role'],
+    packages=find_packages(),
+    include_package_data=True,
+    entry_points='''
+        [console_scripts]
+        assume-role=assume_role.cli:cli
+    '''
 )
