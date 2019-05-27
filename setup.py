@@ -21,6 +21,6 @@ setup(
     include_package_data=True,
     entry_points='''
         [console_scripts]
-        assume-role=assume_role.cli:cli
+        assume-role=assume_role.commands:cli
     '''
 )

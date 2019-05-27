@@ -2,7 +2,7 @@ from click.testing import CliRunner
 import pytest
 import traceback
 
-from assume_role import cli
+from assume_role import commands
 
 
 @pytest.fixture(scope="module")
@@ -11,7 +11,7 @@ def runner():
 
 
 def test_no_profile(runner):
-    result = runner.invoke(cli.cli, ["my_profile"])
+    result = runner.invoke(commands.cli, ["my_profile"])
     if result.exception:
         traceback.print_exception(*result.exc_info)
 
