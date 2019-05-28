@@ -8,7 +8,7 @@ class AWSProfile:
     """
 
     @staticmethod
-    def load_from_config(name):
+    def load_from_config(name) -> 'AWSProfile':
         search_section = "default" if name == "default" else "profile {}".format(name)
         config_file = os.path.expanduser(os.getenv("AWS_CONFIG_FILE", "~/.aws/config"))
 
@@ -95,5 +95,5 @@ class AWSProfile:
         return self._role_session_name
 
     @role_session_name.setter
-    def role_session_name(self,value):
+    def role_session_name(self, value):
         self._role_session_name = value
