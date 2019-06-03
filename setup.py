@@ -11,7 +11,7 @@ setup(
     author="Gerry Put",
     author_email="gerry@theblackcat.company",
     description="A utility to assume aws roles",
-    version="0.1.0",
+    version="0.2.0",
     long_description=read('README.md'),
     long_description_content_type="text/markdown",
     url="https://github.com/becrsh/assume-role-cli",
