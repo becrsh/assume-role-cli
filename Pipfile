@@ -10,11 +10,14 @@ black = "==18.9b0"
 setuptools-scm = "*"
 boto3-type-annotations = "*"
 bump2version = "*"
+wheel = "*"
 
 [packages]
 boto3 = "*"
 click = "*"
 assume-role = {editable = true,path = "."}
+wheel = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7"
