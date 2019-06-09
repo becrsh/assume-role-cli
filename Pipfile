@@ -11,6 +11,7 @@ setuptools-scm = "*"
 boto3-type-annotations = "*"
 bump2version = "*"
 wheel = "*"
+moto = "*"
 
 [packages]
 boto3 = "*"

@@ -1,6 +1,6 @@
 import click
-from aws.profile import AWSProfile
-from aws import assumed_role
+from .aws.profile import AWSProfile
+from .aws import assumed_role
 
 
 @click.command()
