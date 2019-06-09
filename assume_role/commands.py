@@ -17,14 +17,6 @@ def assume_role(assume_profile, env, profile, account_id, role_name, external_id
 
     if no arguments are passed he will check if the assume profile is defined in the AWS Config file.
 
-    :param assume_profile: The profile that is to be assumed
-    :param env: Boolean flag, if present it will export the commands to the stdout to use in eval
-    :param profile: Optional source_profile to use
-    :param account_id: Optional account_id
-    :param role_name:  Optional role_name
-    :param external_id: Optional external_id
-    :param mfa_serial:  Optional mfa_serial
-    :return:
     """
     p: AWSProfile = AWSProfile.load_from_config(assume_profile)
     mfa_code = None
