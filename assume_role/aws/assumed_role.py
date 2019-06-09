@@ -1,6 +1,6 @@
 import boto3
-from profile import AWSProfile
-from credential import AWSCredential
+from .profile import AWSProfile
+from .credential import AWSCredential
 from boto3.exceptions import Boto3Error
 
 
