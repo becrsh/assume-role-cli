@@ -24,9 +24,9 @@ jobs:
             - "/usr/local/lib/python3.7/site-packages"
       - run:
           command: |
-            mkdir -p test-results
+            mkdir -p test-reports
             pipenv run pytest --cov=assume_role --junit-xml=test-reports/junit.xml --cov-report=html:coverage-report/
       - store_test_results:
-          path: test-results
+          path: test-reports
       - store_artifacts:
           path: coverage-report
