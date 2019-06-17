@@ -2,10 +2,6 @@ import configparser
 import boto3
 import os
 
-import logging
-
-logger = logging.getLogger()
-
 # Not really the best way but get_caller_identity can't be mocked atm
 UNIT_TEST = True if os.getenv('TEST_RUN') == 'true' else False
 
@@ -19,7 +15,6 @@ class AWSProfile:
     def load_from_config(name) -> 'AWSProfile':
         search_section = "default" if name == "default" else "profile {}".format(name)
         config = _parse_config_file()
-        logger.info(f"{search_section} in {config.sections()}")
         if search_section in config.sections():
             profile = AWSProfile(
                 name,
@@ -58,10 +53,6 @@ class AWSProfile:
 
         return profiles
 
-    @staticmethod
-    def save_to_file(profile):
-        pass
-
     def __init__(self, name, region=None, source_profile=None, role_arn=None, output=None, mfa_serial=None,
                  external_id=None, role_session_name=None, duration_seconds=3600):
         self._name = name
@@ -76,6 +67,13 @@ class AWSProfile:
 
     def __str__(self):
         return f"{self._name}//{self._region}//{self._role_arn}"
+
+    def save_to_file(self):
+        config = _parse_config_file()
+        section = f"profile {self.name}"
+        config[section] = map(lambda x: x[1:], vars(self))
+        __write_config_file()
+
 
     @property
     def name(self):
@@ -165,8 +163,16 @@ class AWSProfile:
 def _parse_config_file():
     """Parses AWS Config file and return the object"""
     config_file = os.path.expanduser(os.getenv("AWS_CONFIG_FILE", "~/.aws/config"))
-    logger.info(f"Config file reading: {config_file}")
     config = configparser.RawConfigParser()
     config.read(config_file)
 
     return config
+
+
+def _write_config_file(config):
+    """ Writes AWS Configfile to disk """
+
+    config_file = os.path.expanduser(os.getenv("AWS_CONFIG_FILE", "~/.aws/config"))
+
+    with open(config_file, "w") as file:
+        config.write(file)

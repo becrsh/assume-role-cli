@@ -1,12 +1,7 @@
 import click
 from .aws.profile import AWSProfile
 from .aws import assumed_role
-import os
-import sys
-import logging
 
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
-logger = logging.getLogger()
 
 @click.command()
 @click.argument("assume_profile")
