@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/assume-role-cli
+    docker:
+      - image: circleci/python:3.7
+        environment:
+          TEST_RUN=true
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+      - restore_cache:  # ensure this step occurs *before* installing dependencies
+         key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+      - run:
+          command: |
+            sudo pip install pipenv
+            pipenv install
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.7/site-packages"
+      - run:
+          command: |
+            pipenv run pytest --cov=assume_role -v --show-capture=all --cov-report=html:test-restults/
+      - store_test_results:
+          path: test-results
