@@ -2,7 +2,9 @@ import boto3
 from .profile import AWSProfile
 from .credential import AWSCredential
 from boto3.exceptions import Boto3Error
+import logging
 
+logger = logging.getLogger()
 
 class AssumedRole:
     def __init__(self, p: 'AWSProfile', mfa_code: str = None, source_type: str = ""):
@@ -28,13 +30,15 @@ class AssumedRole:
         if mfa_code:
             assume_role_args['TokenCode'] = mfa_code
 
+        logger.info(f"Assuming role: {assume_role_args}")
         response = self._client.assume_role(**assume_role_args)
         if 'Credentials' in response:
             self._credential = AWSCredential(
                 aws_access_key_id=response['Credentials']['AccessKeyId'],
                 aws_secret_access_key=response['Credentials']['SecretAccessKey'],
                 aws_session_token=response['Credentials']['SessionToken'],
-                expiration=response['Credentials']['Expiration']
+                expiration=response['Credentials']['Expiration'],
+                profile=self
             )
         else:
             raise Boto3Error("No Credential in STS response found")

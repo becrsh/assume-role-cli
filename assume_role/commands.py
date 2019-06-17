@@ -1,7 +1,12 @@
 import click
 from .aws.profile import AWSProfile
 from .aws import assumed_role
+import os
+import sys
+import logging
 
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logger = logging.getLogger()
 
 @click.command()
 @click.argument("assume_profile")
@@ -42,6 +47,7 @@ def assume_role(assume_profile, env, profile, account_id, role_name, external_id
         _display_env_vars(credential)
     else:
         click.echo(f"Authenticating Profile: {p.name}")
+        credential.save_to_file()
 
 
 def _display_env_vars(credential):
